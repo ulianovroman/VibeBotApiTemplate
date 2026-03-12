@@ -39,8 +39,11 @@ The application reads the following variables from environment:
 | `TELEGRAM_BOT_TOKEN` | Yes (for runtime) | Telegram bot token. Used to create `ITelegramBotClient` and make Telegram API calls (including webhook registration). |
 | `RAILWAY_PUBLIC_DOMAIN` | Yes | Public domain used to compose webhook URL: `https://<RAILWAY_PUBLIC_DOMAIN>/api/telegram/webhook`. |
 | `TELEGRAM_WEBHOOK_SECRET` | Yes | Secret token for Telegram webhook security. Passed when registering webhook and validated for incoming webhook requests via `X-Telegram-Bot-Api-Secret-Token` header. |
+| `GPT_API_KEY` | No | API key for GPT provider (template for `GptService`). Current `GptService` is a scaffold and does not call the model yet. |
+| `GPT_MODEL` | No | Model name for GPT provider (template for `GptService`), default in config: `gpt-4o-mini`. |
 
 ### Notes
 
+- `GptService` is registered in DI as a template (`IGptService`) and reads the `Gpt` configuration section (`ApiKey`, `Model`), but currently returns an empty result by design.
 - `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` should be considered mandatory for normal app operation.
 - Even though `TELEGRAM_BOT_TOKEN` is checked as optional during DI registration, startup flow later resolves `ITelegramBotClient` unconditionally; without token runtime startup will fail when initializing webhook.

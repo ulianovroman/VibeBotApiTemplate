@@ -3,6 +3,7 @@ using Npgsql;
 using Telegram.Bot;
 using BotApiTemplate.Storage;
 using BotApiTemplate.UpdateChainOfResponsibility;
+using BotApiTemplate.Service;
 
 namespace BotApiTemplate
 {
@@ -42,6 +43,25 @@ namespace BotApiTemplate
             {
                 builder.Services.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(telegramBotToken));
             }
+
+            builder.Services.AddOptions<GptOptions>()
+                .Bind(builder.Configuration.GetSection(GptOptions.SectionName))
+                .PostConfigure(options =>
+                {
+                    var apiKeyFromEnv = Environment.GetEnvironmentVariable("GPT_API_KEY");
+                    var modelFromEnv = Environment.GetEnvironmentVariable("GPT_MODEL");
+
+                    if (!string.IsNullOrWhiteSpace(apiKeyFromEnv))
+                    {
+                        options.ApiKey = apiKeyFromEnv;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(modelFromEnv))
+                    {
+                        options.Model = modelFromEnv;
+                    }
+                });
+            builder.Services.AddSingleton<IGptService, GptService>();
 
             UpdateChainOfResponsibilityConfigurator.Configure(builder.Services);
         }
