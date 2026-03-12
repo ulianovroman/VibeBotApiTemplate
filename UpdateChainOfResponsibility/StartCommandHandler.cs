@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Telegram.Bot;
 using Telegram.Bot.Types;
-using BotApiTemplate.Service;
 using BotApiTemplate.Storage;
 
 namespace BotApiTemplate.UpdateChainOfResponsibility
@@ -8,12 +8,12 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
     public sealed class StartCommandHandler : IUpdateHandler
     {
         private readonly WordsToolContext _db;
-        private readonly IBotMenuService _menuService;
+        private readonly ITelegramBotClient _bot;
 
-        public StartCommandHandler(WordsToolContext db, IBotMenuService menuService)
+        public StartCommandHandler(WordsToolContext db, ITelegramBotClient bot)
         {
             _db = db;
-            _menuService = menuService;
+            _bot = bot;
         }
 
         public async Task HandleAsync(Update update, UpdateContext context, Func<Task> next, CancellationToken ct)
@@ -25,8 +25,8 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
                 return;
             }
 
-            var userId = context.User?.Id ?? message.From?.Id;
-            if (userId is null)
+            var userId = context.User?.Id ?? message?.From?.Id;
+            if (userId is null || message is null)
             {
                 await next();
                 return;
@@ -41,13 +41,10 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(context.StudyLanguageCode))
-            {
-                await _menuService.ShowLanguageSelectionAsync(message.Chat.Id, messageId: null, ct);
-                return;
-            }
-
-            await _menuService.RefreshMainMenuAsync(message.Chat.Id, context.StudyLanguageCode, ct);
+            await _bot.SendMessage(
+                chatId: message.Chat.Id,
+                text: "Бот запущен. Доступ подтверждён.",
+                cancellationToken: ct);
         }
 
         private static bool IsStartCommand(string? text)

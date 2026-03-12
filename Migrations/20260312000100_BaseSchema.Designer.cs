@@ -12,22 +12,62 @@ using BotApiTemplate.Storage;
 namespace BotApiTemplate.Migrations
 {
     [DbContext(typeof(WordsToolContext))]
-    [Migration("20260226190000_AddUsersAndPermissions")]
-    partial class AddUsersAndPermissions
+    [Migration("20260312000100_BaseSchema")]
+    partial class BaseSchema
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.3")
+                .HasAnnotation("ProductVersion", "8.0.24")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("BotApiTemplate.Storage.MessageLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("ChatId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("LoggedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("MessageId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Received")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("SenderUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SenderUsername")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<int>("UpdateId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageLogs");
+                });
+
             modelBuilder.Entity("BotApiTemplate.Storage.UserInStorage", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedNever()
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -51,30 +91,12 @@ namespace BotApiTemplate.Migrations
             modelBuilder.Entity("BotApiTemplate.Storage.UserPermission", b =>
                 {
                     b.Property<long>("UserId")
+                        .ValueGeneratedNever()
                         .HasColumnType("bigint");
 
                     b.HasKey("UserId");
 
                     b.ToTable("UserPermissions");
-                });
-
-            modelBuilder.Entity("BotApiTemplate.Storage.Word", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Words");
                 });
 #pragma warning restore 612, 618
         }

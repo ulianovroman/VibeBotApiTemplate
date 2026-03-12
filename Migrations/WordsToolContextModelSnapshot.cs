@@ -22,56 +22,6 @@ namespace BotApiTemplate.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BotApiTemplate.Storage.Card", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("AddInfo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("CreatedUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("EnglishVersion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("OriginalVersion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PartOfSpeech")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SourceLang")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("TargetLang")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Translation")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cards");
-                });
-
             modelBuilder.Entity("BotApiTemplate.Storage.MessageLog", b =>
                 {
                     b.Property<long>("Id")
@@ -112,31 +62,10 @@ namespace BotApiTemplate.Migrations
                     b.ToTable("MessageLogs");
                 });
 
-            modelBuilder.Entity("BotApiTemplate.Storage.UserCard", b =>
-                {
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("StackId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CardId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId", "StackId", "CardId");
-
-                    b.HasIndex("CardId");
-
-                    b.ToTable("UserCards");
-                });
-
             modelBuilder.Entity("BotApiTemplate.Storage.UserInStorage", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedNever()
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Created")
@@ -157,58 +86,15 @@ namespace BotApiTemplate.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BotApiTemplate.Storage.UserLanguage", b =>
-                {
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("NativeLang")
-                        .HasColumnType("text");
-
-                    b.Property<string>("StudyLang")
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId", "NativeLang", "StudyLang");
-
-                    b.ToTable("UserLanguages");
-                });
-
             modelBuilder.Entity("BotApiTemplate.Storage.UserPermission", b =>
                 {
                     b.Property<long>("UserId")
+                        .ValueGeneratedNever()
                         .HasColumnType("bigint");
 
                     b.HasKey("UserId");
 
                     b.ToTable("UserPermissions");
-                });
-
-            modelBuilder.Entity("BotApiTemplate.Storage.Word", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Words");
-                });
-
-            modelBuilder.Entity("BotApiTemplate.Storage.UserCard", b =>
-                {
-                    b.HasOne("BotApiTemplate.Storage.Card", null)
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
