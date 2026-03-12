@@ -1,10 +1,6 @@
-﻿using Amazon.Runtime;
-using Amazon.S3;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using OpenAI;
 using Telegram.Bot;
-using BotApiTemplate.Service;
 using BotApiTemplate.Storage;
 using BotApiTemplate.UpdateChainOfResponsibility;
 
@@ -15,7 +11,6 @@ namespace BotApiTemplate
         public static async Task RegisterDependencies(WebApplicationBuilder builder)
         {
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -48,53 +43,14 @@ namespace BotApiTemplate
                 builder.Services.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(telegramBotToken));
             }
 
-            var s3Endpoint = Environment.GetEnvironmentVariable("S3_ENDPOINT");
-            var accessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
-            var secretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
-
-            builder.Services.AddSingleton<IAmazonS3>(_ =>
-            {
-                var credentials = new BasicAWSCredentials(accessKey, secretKey);
-
-                var config = new AmazonS3Config
-                {
-                    ServiceURL = s3Endpoint,
-                    ForcePathStyle = true,
-                    SignatureVersion = "4"
-                };
-
-                DisableChunkEncodingIfSupported(config);
-                return new AmazonS3Client(credentials, config);
-            });
-
-            builder.Services.AddSingleton(_ =>
-            {
-                var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-                return new OpenAIClient(apiKey);
-            });
-
             UpdateChainOfResponsibilityConfigurator.Configure(builder.Services);
-
-            builder.Services.AddSingleton<IS3BucketService, S3BucketService>();
-            builder.Services.AddSingleton<IGptService, GptService>();
-            builder.Services.AddScoped<IBotMenuService, BotMenuService>();
-        }
-
-
-        private static void DisableChunkEncodingIfSupported(AmazonS3Config config)
-        {
-            var property = config.GetType().GetProperty("UseChunkEncoding");
-            if (property?.CanWrite == true && property.PropertyType == typeof(bool))
-            {
-                property.SetValue(config, false);
-            }
         }
 
         public static async Task Init(WebApplication app)
         {
             var logger = app.Logger;
 
-            logger.LogInformation($"Own logs starts here");
+            logger.LogInformation("Own logs starts here");
 
             using (var scope = app.Services.CreateScope())
             {
@@ -105,7 +61,7 @@ namespace BotApiTemplate
                 if (migrations.Any())
                 {
                     logger.LogInformation("Migrating database");
-                    logger.LogInformation($"Pending migrations:");
+                    logger.LogInformation("Pending migrations:");
                     foreach (var migration in migrations)
                     {
                         logger.LogInformation(migration);
@@ -115,7 +71,7 @@ namespace BotApiTemplate
                 }
                 else
                 {
-                    logger.LogInformation($"No pending migrations");
+                    logger.LogInformation("No pending migrations");
                 }
 
                 var botClient = scope.ServiceProvider.GetRequiredService<ITelegramBotClient>();
@@ -129,14 +85,8 @@ namespace BotApiTemplate
 
             }
 
-            // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
             app.UseSwagger();
             app.UseSwaggerUI();
-            //}
-
-            //app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
