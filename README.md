@@ -1,4 +1,4 @@
-# WordsToolBot
+# BotApiTemplate
 
 ## Local build requirements
 
@@ -26,5 +26,5 @@ dotnet build -c Release
 Repository already uses a multi-stage Dockerfile with `mcr.microsoft.com/dotnet/sdk:8.0` for build and `mcr.microsoft.com/dotnet/aspnet:8.0` for runtime, so host machine does not need SDK when building image in Docker.
 
 ```bash
-docker build -t words-tool-bot .
+docker build -t bot-api-template .
 ```

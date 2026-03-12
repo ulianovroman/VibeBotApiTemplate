@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using OpenAI;
 using Telegram.Bot;
-using WordsToolBot.Service;
-using WordsToolBot.Storage;
-using WordsToolBot.UpdateChainOfResponsibility;
+using BotApiTemplate.Service;
+using BotApiTemplate.Storage;
+using BotApiTemplate.UpdateChainOfResponsibility;
 
-namespace WordsToolBot
+namespace BotApiTemplate
 {
     public static class StartupHelper
     {

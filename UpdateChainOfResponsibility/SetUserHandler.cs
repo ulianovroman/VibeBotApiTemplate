@@ -1,8 +1,8 @@
 using Telegram.Bot.Types;
-using WordsToolBot.Dto;
-using WordsToolBot.Storage;
+using BotApiTemplate.Dto;
+using BotApiTemplate.Storage;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class SetUserHandler : IUpdateHandler
     {

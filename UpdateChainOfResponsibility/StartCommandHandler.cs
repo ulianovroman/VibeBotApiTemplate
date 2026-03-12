@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot.Types;
-using WordsToolBot.Service;
-using WordsToolBot.Storage;
+using BotApiTemplate.Service;
+using BotApiTemplate.Storage;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class StartCommandHandler : IUpdateHandler
     {

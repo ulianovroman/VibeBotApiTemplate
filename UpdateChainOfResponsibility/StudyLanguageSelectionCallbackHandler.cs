@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using WordsToolBot.Service;
-using WordsToolBot.Storage;
+using BotApiTemplate.Service;
+using BotApiTemplate.Storage;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public class StudyLanguageSelectionCallbackHandler : IUpdateHandler
     {

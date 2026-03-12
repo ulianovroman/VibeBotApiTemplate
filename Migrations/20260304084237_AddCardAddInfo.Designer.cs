@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WordsToolBot.Storage;
+using BotApiTemplate.Storage;
 
 #nullable disable
 
-namespace WordsToolBot.Migrations
+namespace BotApiTemplate.Migrations
 {
     [DbContext(typeof(WordsToolContext))]
     [Migration("20260304084237_AddCardAddInfo")]
@@ -25,7 +25,7 @@ namespace WordsToolBot.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WordsToolBot.Storage.Card", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.Card", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +75,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.MessageLog", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.MessageLog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,7 +115,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("MessageLogs");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.UserCard", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.UserCard", b =>
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -137,7 +137,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("UserCards");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.UserInStorage", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.UserInStorage", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -160,7 +160,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.UserLanguage", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.UserLanguage", b =>
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -176,7 +176,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("UserLanguages");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.UserPermission", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.UserPermission", b =>
                 {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -186,7 +186,7 @@ namespace WordsToolBot.Migrations
                     b.ToTable("UserPermissions");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.Word", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.Word", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,9 +205,9 @@ namespace WordsToolBot.Migrations
                     b.ToTable("Words");
                 });
 
-            modelBuilder.Entity("WordsToolBot.Storage.UserCard", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.UserCard", b =>
                 {
-                    b.HasOne("WordsToolBot.Storage.Card", null)
+                    b.HasOne("BotApiTemplate.Storage.Card", null)
                         .WithMany()
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,9 +1,9 @@
 using Npgsql.Replication.PgOutput.Messages;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using WordsToolBot.Service;
+using BotApiTemplate.Service;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public class PhotoMessageHandler(
         ITelegramBotClient bot,

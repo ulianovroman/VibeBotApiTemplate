@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot.Types;
-using WordsToolBot.Storage;
+using BotApiTemplate.Storage;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class SetUserStudyLanguageHandler : IUpdateHandler
     {

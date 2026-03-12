@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot.Types;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public interface IUpdateHandler
     {

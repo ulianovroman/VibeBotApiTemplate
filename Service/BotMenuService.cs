@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types.ReplyMarkups;
-using WordsToolBot.Storage;
+using BotApiTemplate.Storage;
 
-namespace WordsToolBot.Service
+namespace BotApiTemplate.Service
 {
     public sealed class BotMenuService : IBotMenuService
     {

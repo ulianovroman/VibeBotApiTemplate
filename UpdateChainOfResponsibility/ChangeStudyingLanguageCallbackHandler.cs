@@ -1,9 +1,9 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using WordsToolBot.Service;
+using BotApiTemplate.Service;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public class ChangeStudyingLanguageCallbackHandler : IUpdateHandler
     {
