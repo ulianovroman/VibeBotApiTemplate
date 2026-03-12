@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using Quartz;
 using Telegram.Bot;
 using BotApiTemplate.Storage;
 using BotApiTemplate.UpdateChainOfResponsibility;
@@ -37,6 +38,12 @@ namespace BotApiTemplate
 
             builder.Services.AddDbContext<WordsToolContext>(options =>
                 options.UseNpgsql(connBuilder.ConnectionString));
+
+            builder.Services.AddQuartz();
+            builder.Services.AddQuartzHostedService(options =>
+            {
+                options.WaitForJobsToComplete = true;
+            });
 
             var telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
             if (!string.IsNullOrWhiteSpace(telegramBotToken))

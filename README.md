@@ -45,5 +45,6 @@ The application reads the following variables from environment:
 ### Notes
 
 - `GptService` is registered in DI as a template (`IGptService`) and reads the `Gpt` configuration section (`ApiKey`, `Model`), but currently returns an empty result by design.
+- Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store, which is sufficient for template bot scenarios without scheduler persistence.
 - `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` should be considered mandatory for normal app operation.
 - Even though `TELEGRAM_BOT_TOKEN` is checked as optional during DI registration, startup flow later resolves `ITelegramBotClient` unconditionally; without token runtime startup will fail when initializing webhook.
