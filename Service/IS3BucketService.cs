@@ -1,7 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 
-namespace WordsToolBot.Service
+namespace BotApiTemplate.Service
 {
     public interface IS3BucketService
     {

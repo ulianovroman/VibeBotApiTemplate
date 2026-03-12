@@ -1,4 +1,4 @@
-namespace WordsToolBot.Service
+namespace BotApiTemplate.Service
 {
     public static class BotCallbackData
     {

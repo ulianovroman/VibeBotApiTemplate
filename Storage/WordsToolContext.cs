@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-namespace WordsToolBot.Storage
+namespace BotApiTemplate.Storage
 {
     public class DesignTimeDbContextFactory
     : IDesignTimeDbContextFactory<WordsToolContext>

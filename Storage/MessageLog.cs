@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WordsToolBot.Storage
+namespace BotApiTemplate.Storage
 {
     public class MessageLog
     {

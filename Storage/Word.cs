@@ -1,4 +1,4 @@
-﻿namespace WordsToolBot.Storage
+﻿namespace BotApiTemplate.Storage
 {
     public class Word
     {

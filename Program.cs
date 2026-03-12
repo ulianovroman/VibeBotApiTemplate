@@ -1,4 +1,4 @@
-using WordsToolBot;
+using BotApiTemplate;
 
 
 var builder = WebApplication.CreateBuilder(args);

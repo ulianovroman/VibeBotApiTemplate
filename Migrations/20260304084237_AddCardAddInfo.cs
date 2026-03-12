@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace WordsToolBot.Migrations
+namespace BotApiTemplate.Migrations
 {
     /// <inheritdoc />
     public partial class AddCardAddInfo : Migration

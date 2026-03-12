@@ -1,7 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 
-namespace WordsToolBot.Service
+namespace BotApiTemplate.Service
 {
     public static class TelegramBotClientCallbackQueryExtensions
     {

@@ -1,6 +1,6 @@
-using WordsToolBot.Dto;
+using BotApiTemplate.Dto;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class UpdateContext
     {

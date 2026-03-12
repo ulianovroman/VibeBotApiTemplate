@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using WordsToolBot.UpdateChainOfResponsibility;
+using BotApiTemplate.UpdateChainOfResponsibility;
 
-namespace WordsToolBot.Controllers;
+namespace BotApiTemplate.Controllers;
 
 [ApiController]
 [Route("api/telegram")]

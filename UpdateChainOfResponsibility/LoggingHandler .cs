@@ -1,7 +1,7 @@
-using WordsToolBot.Storage;
+using BotApiTemplate.Storage;
 using Telegram.Bot.Types;
 
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class LoggingHandler : IUpdateHandler
     {

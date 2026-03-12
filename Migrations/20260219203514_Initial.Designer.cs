@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WordsToolBot.Storage;
+using BotApiTemplate.Storage;
 
 #nullable disable
 
-namespace WordsToolBot.Migrations
+namespace BotApiTemplate.Migrations
 {
     [DbContext(typeof(WordsToolContext))]
     [Migration("20260219203514_Initial")]
@@ -25,7 +25,7 @@ namespace WordsToolBot.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("WordsToolBot.Storage.Word", b =>
+            modelBuilder.Entity("BotApiTemplate.Storage.Word", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

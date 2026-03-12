@@ -1,4 +1,4 @@
-namespace WordsToolBot;
+namespace BotApiTemplate;
 
 public class WeatherForecast
 {

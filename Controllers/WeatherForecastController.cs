@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace WordsToolBot.Controllers;
+namespace BotApiTemplate.Controllers;
 
 [ApiController]
 [Route("[controller]")]

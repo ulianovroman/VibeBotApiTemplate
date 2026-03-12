@@ -1,4 +1,4 @@
-namespace WordsToolBot.Dto
+namespace BotApiTemplate.Dto
 {
     public sealed class UserDto
     {

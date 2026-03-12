@@ -1,4 +1,4 @@
-namespace WordsToolBot.UpdateChainOfResponsibility
+namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public static class UpdateChainOfResponsibilityConfigurator
     {
