@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using Quartz;
 using Telegram.Bot;
 using BotApiTemplate.Storage;
 using BotApiTemplate.UpdateChainOfResponsibility;
 using BotApiTemplate.Service;
+using BotApiTemplate.Jobs;
 
 namespace BotApiTemplate
 {
@@ -39,11 +39,7 @@ namespace BotApiTemplate
             builder.Services.AddDbContext<BotContext>(options =>
                 options.UseNpgsql(connBuilder.ConnectionString));
 
-            builder.Services.AddQuartz();
-            builder.Services.AddQuartzHostedService(options =>
-            {
-                options.WaitForJobsToComplete = true;
-            });
+            builder.Services.AddAttributedQuartzJobs(typeof(StartupHelper).Assembly);
 
             var telegramBotToken = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramBotToken);
             if (!string.IsNullOrWhiteSpace(telegramBotToken))

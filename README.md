@@ -9,7 +9,7 @@ You can use it as a starting point when you want to launch a bot quickly with co
 - HTTP API endpoint for receiving Telegram webhook updates;
 - update processing pipeline based on Chain of Responsibility;
 - PostgreSQL integration via EF Core + migrations;
-- AI/GPT service infrastructure (interface + scaffold implementation);
+- AI/GPT service infrastructure (interface + ready-to-edit direct API call example);
 - Dockerized deployment flow (for Railway, Render, Fly.io, VPS, etc.).
 
 ## What's already implemented
@@ -26,7 +26,7 @@ You can use it as a starting point when you want to launch a bot quickly with co
 - **Service layer** (`Service/*`) including:
   - bot phrases,
   - Telegram API extensions,
-  - `IGptService` and `GptService` scaffold.
+  - `IGptService` and `GptService` with direct GPT API call template.
 - **Runtime infrastructure** including:
   - dependency injection and middleware setup in `Program.cs`,
   - multi-stage `Dockerfile`,
@@ -82,13 +82,13 @@ The application reads the following variables from environment:
 | `TELEGRAM_BOT_TOKEN` | Yes (for runtime) | Telegram bot token. Used to create `ITelegramBotClient` and make Telegram API calls (including webhook registration). |
 | `RAILWAY_PUBLIC_DOMAIN` | Yes | Public domain used to compose webhook URL: `https://<RAILWAY_PUBLIC_DOMAIN>/api/telegram/webhook`. |
 | `TELEGRAM_WEBHOOK_SECRET` | Yes | Secret token for Telegram webhook security. Passed when registering webhook and validated for incoming webhook requests via `X-Telegram-Bot-Api-Secret-Token` header. |
-| `GPT_API_KEY` | No | API key for GPT provider (template for `GptService`). Current `GptService` is a scaffold and does not call the model yet. |
-| `GPT_MODEL` | No | Model name for GPT provider (template for `GptService`), default in config: `gpt-4o-mini`. |
+| `GPT_API_KEY` | No | API key for GPT provider. If configured, `GptService` performs a direct GPT API call. |
+| `GPT_MODEL` | No | Model name for GPT provider for direct API calls in `GptService`, default: `gpt-4o-mini`. |
 
 ### Notes
 
-- `GptService` is registered in DI as a template (`IGptService`) and reads the `Gpt` configuration section (`ApiKey`, `Model`), but currently returns an empty result by design.
-- Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store, which is sufficient for template bot scenarios without scheduler persistence.
+- `GptService` is registered in DI (`IGptService`), reads the `Gpt` configuration section (`ApiKey`, `Model`), and contains a direct GPT API call with example system/user prompt templates you can replace with your own prompts.
+- Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store and automatic job discovery by attribute: add a class in `Jobs` implementing `IJob` and annotate it with `QuartzSchedule` to register schedule automatically. Includes `DailySixPmUtcLogJob` as an example (18:00 UTC daily).
 - `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` should be considered mandatory for normal app operation.
 - Even though `TELEGRAM_BOT_TOKEN` is checked as optional during DI registration, startup flow later resolves `ITelegramBotClient` unconditionally; without token runtime startup will fail when initializing webhook.
 
@@ -103,7 +103,7 @@ The application reads the following variables from environment:
 - контроллер webhook Telegram;
 - цепочка обработчиков апдейтов (включая `/start` и логирование);
 - слой хранения с `BotContext` (EF Core + PostgreSQL миграции);
-- сервисный слой с заготовкой `IGptService`/`GptService`;
+- сервисный слой с `IGptService`/`GptService` и примером прямого GPT API-вызова;
 - инфраструктура запуска и Docker-конфигурация.
 
 Для чего использовать:
