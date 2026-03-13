@@ -30,7 +30,7 @@ public class TelegramWebhookController : ControllerBase
         [FromHeader(Name = "X-Telegram-Bot-Api-Secret-Token")] string? headerSecret,
         CancellationToken cancellationToken)
     {
-        var secret = Environment.GetEnvironmentVariable("TELEGRAM_WEBHOOK_SECRET");
+        var secret = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramWebhookSecret);
 
         if (headerSecret != secret)
         {
