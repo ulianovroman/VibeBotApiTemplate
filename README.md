@@ -1,5 +1,48 @@
 # BotApiTemplate
 
+## What this repository is
+
+`BotApiTemplate` is an **ASP.NET Core (.NET 8)** backend template for building Telegram bots with webhooks.
+
+You can use it as a starting point when you want to launch a bot quickly with core layers already prepared:
+
+- HTTP API endpoint for receiving Telegram webhook updates;
+- update processing pipeline based on Chain of Responsibility;
+- PostgreSQL integration via EF Core + migrations;
+- AI/GPT service infrastructure (interface + scaffold implementation);
+- Dockerized deployment flow (for Railway, Render, Fly.io, VPS, etc.).
+
+## What's already implemented
+
+- **Telegram webhook controller** (`Controllers/TelegramWebhookController.cs`) for receiving and validating incoming updates.
+- **Update processing pipeline** (`UpdateChainOfResponsibility/*`) including:
+  - user identification,
+  - `/start` command handling,
+  - logging and extensible handler architecture.
+- **Data storage layer** (`Storage/*`) including:
+  - `BotContext` (EF Core `DbContext`),
+  - user and message-log entities,
+  - ready-to-use PostgreSQL migrations.
+- **Service layer** (`Service/*`) including:
+  - bot phrases,
+  - Telegram API extensions,
+  - `IGptService` and `GptService` scaffold.
+- **Runtime infrastructure** including:
+  - dependency injection and middleware setup in `Program.cs`,
+  - multi-stage `Dockerfile`,
+  - example app settings in `appsettings*.json`.
+
+## Typical use cases
+
+This template is a good fit for:
+
+- Telegram bot MVPs (FAQ bot, support bot, personal assistant);
+- internal team bots (notifications and simple workflows);
+- pet projects and educational tasks around ASP.NET Core + Telegram Bot API;
+- a foundation for LLM-powered bots (by implementing real logic inside `GptService`).
+
+If you want to bootstrap a bot backend fast and avoid building the base architecture from scratch, this repository is intended for exactly that.
+
 ## Local build requirements
 
 Project targets **.NET 8** (`net8.0`), so install .NET SDK 8.x before running build locally.
@@ -48,3 +91,24 @@ The application reads the following variables from environment:
 - Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store, which is sufficient for template bot scenarios without scheduler persistence.
 - `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` should be considered mandatory for normal app operation.
 - Even though `TELEGRAM_BOT_TOKEN` is checked as optional during DI registration, startup flow later resolves `ITelegramBotClient` unconditionally; without token runtime startup will fail when initializing webhook.
+
+---
+
+## Русская версия (кратко)
+
+`BotApiTemplate` — шаблон backend-приложения на **ASP.NET Core (.NET 8)** для Telegram-бота через webhook.
+
+Что есть в репозитории:
+
+- контроллер webhook Telegram;
+- цепочка обработчиков апдейтов (включая `/start` и логирование);
+- слой хранения с `BotContext` (EF Core + PostgreSQL миграции);
+- сервисный слой с заготовкой `IGptService`/`GptService`;
+- инфраструктура запуска и Docker-конфигурация.
+
+Для чего использовать:
+
+- быстрый старт MVP Telegram-бота;
+- внутренние боты для команды;
+- учебные/пет-проекты;
+- база для последующей интеграции LLM.

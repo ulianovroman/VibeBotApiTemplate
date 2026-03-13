@@ -7,10 +7,10 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class StartCommandHandler : IUpdateHandler
     {
-        private readonly WordsToolContext _db;
+        private readonly BotContext _db;
         private readonly ITelegramBotClient _bot;
 
-        public StartCommandHandler(WordsToolContext db, ITelegramBotClient bot)
+        public StartCommandHandler(BotContext db, ITelegramBotClient bot)
         {
             _db = db;
             _bot = bot;

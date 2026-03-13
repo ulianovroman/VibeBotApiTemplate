@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore.Design;
 namespace BotApiTemplate.Storage
 {
     public class DesignTimeDbContextFactory
-    : IDesignTimeDbContextFactory<WordsToolContext>
+    : IDesignTimeDbContextFactory<BotContext>
     {
-        public WordsToolContext CreateDbContext(string[] args)
+        public BotContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<WordsToolContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<BotContext>();
             optionsBuilder.UseNpgsql("Host=localhost;Database=test;Username=postgres;Password=postgres");
 
-            return new WordsToolContext(optionsBuilder.Options);
+            return new BotContext(optionsBuilder.Options);
         }
     }
-    public class WordsToolContext : DbContext
+    public class BotContext : DbContext
     {
-        public WordsToolContext(DbContextOptions<WordsToolContext> options)
+        public BotContext(DbContextOptions<BotContext> options)
             : base(options)
         {
         }

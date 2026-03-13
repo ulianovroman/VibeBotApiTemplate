@@ -10,8 +10,8 @@ using BotApiTemplate.Storage;
 
 namespace BotApiTemplate.Migrations
 {
-    [DbContext(typeof(WordsToolContext))]
-    partial class WordsToolContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BotContext))]
+    partial class BotContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

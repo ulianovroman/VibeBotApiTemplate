@@ -5,9 +5,9 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class LoggingHandler : IUpdateHandler
     {
-        private readonly WordsToolContext _context;
+        private readonly BotContext _context;
 
-        public LoggingHandler(WordsToolContext context)
+        public LoggingHandler(BotContext context)
         {
             _context = context;
         }

@@ -36,7 +36,7 @@ namespace BotApiTemplate
                 SslMode = SslMode.Require
             };
 
-            builder.Services.AddDbContext<WordsToolContext>(options =>
+            builder.Services.AddDbContext<BotContext>(options =>
                 options.UseNpgsql(connBuilder.ConnectionString));
 
             builder.Services.AddQuartz();
@@ -81,7 +81,7 @@ namespace BotApiTemplate
 
             using (var scope = app.Services.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<WordsToolContext>();
+                var db = scope.ServiceProvider.GetRequiredService<BotContext>();
 
                 var migrations = db.Database.GetPendingMigrations();
 

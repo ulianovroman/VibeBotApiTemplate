@@ -11,7 +11,7 @@ using BotApiTemplate.Storage;
 
 namespace BotApiTemplate.Migrations
 {
-    [DbContext(typeof(WordsToolContext))]
+    [DbContext(typeof(BotContext))]
     [Migration("20260312000100_BaseSchema")]
     partial class BaseSchema
     {

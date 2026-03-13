@@ -6,10 +6,10 @@ namespace BotApiTemplate.UpdateChainOfResponsibility
 {
     public sealed class SetUserHandler : IUpdateHandler
     {
-        private readonly WordsToolContext _db;
+        private readonly BotContext _db;
         private readonly ILogger<SetUserHandler> _logger;
 
-        public SetUserHandler(WordsToolContext db, ILogger<SetUserHandler> logger)
+        public SetUserHandler(BotContext db, ILogger<SetUserHandler> logger)
         {
             _db = db;
             _logger = logger;
