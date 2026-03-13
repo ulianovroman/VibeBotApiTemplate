@@ -79,7 +79,7 @@ The application reads the following variables from environment:
 | Variable | Required | Description |
 | --- | --- | --- |
 | `DATABASE_URL` | Yes | PostgreSQL connection URL in the format `postgres://<user>:<password>@<host>:<port>/<db_name>`. Used at startup to build EF Core/Npgsql connection string. If missing, app throws `InvalidOperationException` and does not start. |
-| `TELEGRAM_BOT_TOKEN` | Yes (for runtime) | Telegram bot token. Used to create `ITelegramBotClient` and make Telegram API calls (including webhook registration). |
+| `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token. Used to create `ITelegramBotClient` and make Telegram API calls (including webhook registration). If missing, app throws `InvalidOperationException` during dependency registration and does not start. |
 | `RAILWAY_PUBLIC_DOMAIN` | Yes | Public domain used to compose webhook URL: `https://<RAILWAY_PUBLIC_DOMAIN>/api/telegram/webhook`. |
 | `TELEGRAM_WEBHOOK_SECRET` | Yes | Secret token for Telegram webhook security. Passed when registering webhook and validated for incoming webhook requests via `X-Telegram-Bot-Api-Secret-Token` header. |
 | `GPT_API_KEY` | No | API key for GPT provider. If configured, `GptService` performs a direct GPT API call. |
@@ -89,8 +89,8 @@ The application reads the following variables from environment:
 
 - `GptService` is registered in DI (`IGptService`), reads the `Gpt` configuration section (`ApiKey`, `Model`), and contains a direct GPT API call with example system/user prompt templates you can replace with your own prompts.
 - Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store and automatic job discovery by attribute: add a class in `Jobs` implementing `IJob` and annotate it with `QuartzSchedule` to register schedule automatically. Includes `DailySixPmUtcLogJob` as an example (18:00 UTC daily).
-- `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` should be considered mandatory for normal app operation.
-- Even though `TELEGRAM_BOT_TOKEN` is checked as optional during DI registration, startup flow later resolves `ITelegramBotClient` unconditionally; without token runtime startup will fail when initializing webhook.
+- `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, and `TELEGRAM_WEBHOOK_SECRET` are mandatory for normal app operation.
+- Startup validates `TELEGRAM_BOT_TOKEN` in `RegisterDependencies`, so misconfiguration fails fast before service registration completes.
 
 ---
 

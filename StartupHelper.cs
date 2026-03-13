@@ -12,6 +12,12 @@ namespace BotApiTemplate
     {
         public static async Task RegisterDependencies(WebApplicationBuilder builder)
         {
+            var telegramBotToken = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramBotToken);
+            if (string.IsNullOrWhiteSpace(telegramBotToken))
+            {
+                throw new InvalidOperationException($"{EnvironmentVariables.TelegramBotToken} environment variable is not set.");
+            }
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -40,12 +46,7 @@ namespace BotApiTemplate
                 options.UseNpgsql(connBuilder.ConnectionString));
 
             builder.Services.AddAttributedQuartzJobs(typeof(StartupHelper).Assembly);
-
-            var telegramBotToken = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramBotToken);
-            if (!string.IsNullOrWhiteSpace(telegramBotToken))
-            {
-                builder.Services.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(telegramBotToken));
-            }
+            builder.Services.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(telegramBotToken));
 
             builder.Services.AddOptions<GptOptions>()
                 .Bind(builder.Configuration.GetSection(GptOptions.SectionName))
