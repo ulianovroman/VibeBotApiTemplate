@@ -16,11 +16,11 @@ namespace BotApiTemplate
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUrl = Environment.GetEnvironmentVariable(EnvironmentVariables.DatabaseUrl);
 
             if (string.IsNullOrEmpty(databaseUrl))
             {
-                throw new InvalidOperationException("DATABASE_URL environment variable is not set.");
+                throw new InvalidOperationException($"{EnvironmentVariables.DatabaseUrl} environment variable is not set.");
             }
 
             var uri = new Uri(databaseUrl);
@@ -45,7 +45,7 @@ namespace BotApiTemplate
                 options.WaitForJobsToComplete = true;
             });
 
-            var telegramBotToken = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
+            var telegramBotToken = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramBotToken);
             if (!string.IsNullOrWhiteSpace(telegramBotToken))
             {
                 builder.Services.AddSingleton<ITelegramBotClient>(_ => new TelegramBotClient(telegramBotToken));
@@ -55,8 +55,8 @@ namespace BotApiTemplate
                 .Bind(builder.Configuration.GetSection(GptOptions.SectionName))
                 .PostConfigure(options =>
                 {
-                    var apiKeyFromEnv = Environment.GetEnvironmentVariable("GPT_API_KEY");
-                    var modelFromEnv = Environment.GetEnvironmentVariable("GPT_MODEL");
+                    var apiKeyFromEnv = Environment.GetEnvironmentVariable(EnvironmentVariables.GptApiKey);
+                    var modelFromEnv = Environment.GetEnvironmentVariable(EnvironmentVariables.GptModel);
 
                     if (!string.IsNullOrWhiteSpace(apiKeyFromEnv))
                     {
@@ -102,8 +102,8 @@ namespace BotApiTemplate
                 }
 
                 var botClient = scope.ServiceProvider.GetRequiredService<ITelegramBotClient>();
-                var domain = Environment.GetEnvironmentVariable("RAILWAY_PUBLIC_DOMAIN");
-                var secret = Environment.GetEnvironmentVariable("TELEGRAM_WEBHOOK_SECRET");
+                var domain = Environment.GetEnvironmentVariable(EnvironmentVariables.RailwayPublicDomain);
+                var secret = Environment.GetEnvironmentVariable(EnvironmentVariables.TelegramWebhookSecret);
 
                 await botClient.SetWebhook(
                     url: $"https://{domain}/api/telegram/webhook",
