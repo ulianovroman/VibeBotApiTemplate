@@ -13,8 +13,8 @@ namespace BotApiTemplate.Service
 
         public Task<string?> GenerateReplyAsync(string prompt, CancellationToken cancellationToken = default)
         {
-            // Шаблон: сервис уже подключён к DI и конфигурации,
-            // здесь будет вызов модели после наполнения бизнес-логикой.
+            // Template: the service is already connected to DI and configuration,
+            // the model call will be placed here after adding business logic.
             _ = prompt;
             _ = cancellationToken;
             _ = _options;
