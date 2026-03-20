@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using BotApiTemplate.Storage;
+using VibeBotApi.Storage;
 
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public sealed class StartCommandHandler : IUpdateHandler
     {

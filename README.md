@@ -1,8 +1,8 @@
-# BotApiTemplate
+# VibeBotApi
 
 ## What this repository is
 
-`BotApiTemplate` is an **ASP.NET Core (.NET 8)** backend template for building Telegram bots with webhooks.
+`VibeBotApi` is an **ASP.NET Core (.NET 8)** backend template for building Telegram bots with webhooks.
 
 You can use it as a starting point when you want to launch a bot quickly with core layers already prepared:
 
@@ -100,7 +100,7 @@ This project is distributed under the MIT License. See [LICENSE](./LICENSE).
 
 ## Русская версия (кратко)
 
-`BotApiTemplate` — шаблон backend-приложения на **ASP.NET Core (.NET 8)** для Telegram-бота через webhook.
+`VibeBotApi` — шаблон backend-приложения на **ASP.NET Core (.NET 8)** для Telegram-бота через webhook.
 
 Что есть в репозитории:
 

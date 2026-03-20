@@ -1,7 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 
-namespace BotApiTemplate.Service
+namespace VibeBotApi.Service
 {
     public static class TelegramBotClientCallbackQueryExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace BotApiTemplate.Storage
+﻿namespace VibeBotApi.Storage
 {
     public class UserInStorage
     {

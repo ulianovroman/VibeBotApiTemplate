@@ -1,6 +1,6 @@
-using BotApiTemplate.Dto;
+using VibeBotApi.Dto;
 
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public sealed class UpdateContext
     {

@@ -1,8 +1,8 @@
 using Telegram.Bot.Types;
-using BotApiTemplate.Dto;
-using BotApiTemplate.Storage;
+using VibeBotApi.Dto;
+using VibeBotApi.Storage;
 
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public sealed class SetUserHandler : IUpdateHandler
     {

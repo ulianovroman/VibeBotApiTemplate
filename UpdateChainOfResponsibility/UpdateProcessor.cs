@@ -1,6 +1,6 @@
 using Telegram.Bot.Types;
 
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public class UpdateProcessor
     {

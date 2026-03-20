@@ -1,7 +1,7 @@
-using BotApiTemplate.Storage;
+using VibeBotApi.Storage;
 using Telegram.Bot.Types;
 
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public sealed class LoggingHandler : IUpdateHandler
     {

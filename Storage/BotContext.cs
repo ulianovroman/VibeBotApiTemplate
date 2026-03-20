@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-namespace BotApiTemplate.Storage
+namespace VibeBotApi.Storage
 {
     public class DesignTimeDbContextFactory
     : IDesignTimeDbContextFactory<BotContext>

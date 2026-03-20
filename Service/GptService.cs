@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using OpenAI.Chat;
 
-namespace BotApiTemplate.Service
+namespace VibeBotApi.Service
 {
     public sealed class GptService : IGptService
     {

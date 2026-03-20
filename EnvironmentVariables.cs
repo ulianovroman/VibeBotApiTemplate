@@ -1,4 +1,4 @@
-namespace BotApiTemplate
+namespace VibeBotApi
 {
     public static class EnvironmentVariables
     {

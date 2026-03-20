@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using BotApiTemplate.Storage;
+using VibeBotApi.Storage;
 
 #nullable disable
 
-namespace BotApiTemplate.Migrations
+namespace VibeBotApi.Migrations
 {
     [DbContext(typeof(BotContext))]
     partial class BotContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace BotApiTemplate.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BotApiTemplate.Storage.MessageLog", b =>
+            modelBuilder.Entity("VibeBotApi.Storage.MessageLog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -62,7 +62,7 @@ namespace BotApiTemplate.Migrations
                     b.ToTable("MessageLogs");
                 });
 
-            modelBuilder.Entity("BotApiTemplate.Storage.UserInStorage", b =>
+            modelBuilder.Entity("VibeBotApi.Storage.UserInStorage", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedNever()
@@ -86,7 +86,7 @@ namespace BotApiTemplate.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BotApiTemplate.Storage.UserPermission", b =>
+            modelBuilder.Entity("VibeBotApi.Storage.UserPermission", b =>
                 {
                     b.Property<long>("UserId")
                         .ValueGeneratedNever()

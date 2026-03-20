@@ -1,6 +1,6 @@
 using Quartz;
 
-namespace BotApiTemplate.Jobs
+namespace VibeBotApi.Jobs
 {
     [QuartzSchedule("0 0 18 * * ?", TimeZoneId = "UTC")]
     public sealed class DailySixPmUtcLogJob : IJob

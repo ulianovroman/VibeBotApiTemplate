@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace BotApiTemplate.Migrations
+namespace VibeBotApi.Migrations
 {
     public partial class BaseSchema : Migration
     {

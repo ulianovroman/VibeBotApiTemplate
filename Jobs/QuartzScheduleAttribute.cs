@@ -1,4 +1,4 @@
-namespace BotApiTemplate.Jobs
+namespace VibeBotApi.Jobs
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class QuartzScheduleAttribute : Attribute

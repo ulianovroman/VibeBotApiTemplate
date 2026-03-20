@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Telegram.Bot;
-using BotApiTemplate.Storage;
-using BotApiTemplate.UpdateChainOfResponsibility;
-using BotApiTemplate.Service;
-using BotApiTemplate.Jobs;
+using VibeBotApi.Storage;
+using VibeBotApi.UpdateChainOfResponsibility;
+using VibeBotApi.Service;
+using VibeBotApi.Jobs;
 using System.Text;
 
-namespace BotApiTemplate
+namespace VibeBotApi
 {
     public static class StartupHelper
     {

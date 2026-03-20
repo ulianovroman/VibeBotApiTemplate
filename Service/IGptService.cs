@@ -1,4 +1,4 @@
-namespace BotApiTemplate.Service
+namespace VibeBotApi.Service
 {
     public interface IGptService
     {

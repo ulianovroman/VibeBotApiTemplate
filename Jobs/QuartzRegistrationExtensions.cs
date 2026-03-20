@@ -1,7 +1,7 @@
 using System.Reflection;
 using Quartz;
 
-namespace BotApiTemplate.Jobs
+namespace VibeBotApi.Jobs
 {
     public static class QuartzRegistrationExtensions
     {

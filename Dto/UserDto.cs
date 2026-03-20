@@ -1,4 +1,4 @@
-namespace BotApiTemplate.Dto
+namespace VibeBotApi.Dto
 {
     public sealed class UserDto
     {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using BotApiTemplate.UpdateChainOfResponsibility;
+using VibeBotApi.UpdateChainOfResponsibility;
 
-namespace BotApiTemplate.Controllers;
+namespace VibeBotApi.Controllers;
 
 [ApiController]
 [Route("api/telegram")]

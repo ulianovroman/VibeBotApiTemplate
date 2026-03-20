@@ -1,4 +1,4 @@
-namespace BotApiTemplate.UpdateChainOfResponsibility
+namespace VibeBotApi.UpdateChainOfResponsibility
 {
     public static class UpdateChainOfResponsibilityConfigurator
     {

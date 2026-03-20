@@ -1,4 +1,4 @@
-using BotApiTemplate;
+using VibeBotApi;
 
 
 var builder = WebApplication.CreateBuilder(args);

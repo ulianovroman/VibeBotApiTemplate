@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotApiTemplate", "BotApiTemplate.csproj", "{C654E1C5-5D4B-4295-8187-34CDADE1204F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeBotApi", "VibeBotApi.csproj", "{C654E1C5-5D4B-4295-8187-34CDADE1204F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
