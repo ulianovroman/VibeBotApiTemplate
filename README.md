@@ -1,53 +1,82 @@
 # VibeBotApi
 
-## What this repository is
+A beginner-friendly ASP.NET Core (.NET 8) template for building Telegram bots with webhooks, PostgreSQL, and optional GPT integration.
 
-`VibeBotApi` is an **ASP.NET Core (.NET 8)** backend template for building Telegram bots with webhooks.
+---
 
-You can use it as a starting point when you want to launch a bot quickly with core layers already prepared:
+## Who this is for
 
-- HTTP API endpoint for receiving Telegram webhook updates;
-- update processing pipeline based on Chain of Responsibility;
-- PostgreSQL integration via EF Core + migrations;
-- AI/GPT service infrastructure (interface + ready-to-edit direct API call example);
-- Dockerized deployment flow (for Railway, Render, Fly.io, VPS, etc.).
+This repository is made for:
+- beginner and intermediate developers who want to ship a Telegram bot backend quickly;
+- "vibe coders" who want a safe structure and practical defaults;
+- teams who need a clean starting point instead of building infra from scratch.
 
-## What's already implemented
+If you can run basic terminal commands, you can start from this template.
 
-- **Telegram webhook controller** (`Controllers/TelegramWebhookController.cs`) for receiving and validating incoming updates.
-- **Update processing pipeline** (`UpdateChainOfResponsibility/*`) including:
-  - user identification,
-  - `/start` command handling,
-  - logging and extensible handler architecture.
-- **Data storage layer** (`Storage/*`) including:
-  - `BotContext` (EF Core `DbContext`),
-  - user and message-log entities,
-  - ready-to-use PostgreSQL migrations.
-- **Service layer** (`Service/*`) including:
-  - bot phrases,
-  - Telegram API extensions,
-  - `IGptService` and `GptService` with direct GPT API call template.
-- **Runtime infrastructure** including:
-  - dependency injection and middleware setup in `Program.cs`,
-  - multi-stage `Dockerfile`,
-  - example app settings in `appsettings*.json`.
+---
 
-## Typical use cases
+## What you get out of the box
 
-This template is a good fit for:
+- Webhook endpoint for Telegram updates.
+- Update pipeline with Chain of Responsibility handlers.
+- PostgreSQL + EF Core + ready migration baseline.
+- Optional GPT service interface and implementation scaffold.
+- Quartz jobs with automatic attribute-based registration.
+- Dockerfile for deployment.
 
-- Telegram bot MVPs (FAQ bot, support bot, personal assistant);
-- internal team bots (notifications and simple workflows);
-- pet projects and educational tasks around ASP.NET Core + Telegram Bot API;
-- a foundation for LLM-powered bots (by implementing real logic inside `GptService`).
+---
 
-If you want to bootstrap a bot backend fast and avoid building the base architecture from scratch, this repository is intended for exactly that.
+## Mental model (read this first)
 
-## Local build requirements
+### Runtime flow
 
-Project targets **.NET 8** (`net8.0`), so install .NET SDK 8.x before running build locally.
+```text
+Telegram update
+  -> /api/telegram/webhook
+  -> TelegramWebhookController
+  -> UpdateProcessor
+  -> SetUserHandler -> LoggingHandler -> StartCommandHandler
+```
 
-### Ubuntu 24.04
+### Startup flow
+
+```text
+Program.cs
+  -> StartupHelper.RegisterDependencies()
+  -> StartupHelper.Init()
+```
+
+What happens on startup:
+1. Required environment variables are validated.
+2. DbContext is configured from `DATABASE_URL`.
+3. Telegram client + services are registered.
+4. Quartz jobs are discovered by attribute.
+5. Pending EF migrations are applied.
+6. Telegram webhook is configured.
+
+---
+
+## Project map (where to look)
+
+- `Program.cs` — minimal app entrypoint.
+- `StartupHelper.cs` — startup logic and dependency registration.
+- `Controllers/` — HTTP endpoints.
+- `UpdateChainOfResponsibility/` — update handler pipeline.
+- `Storage/` — EF Core entities and `BotContext`.
+- `Migrations/` — schema migration files.
+- `Jobs/` — Quartz schedule attribute + jobs.
+- `Service/` — GPT integration layer.
+- `AGENTS.md` — deep onboarding and contributor instructions.
+
+---
+
+## Prerequisites
+
+- .NET SDK 8.x
+- PostgreSQL database
+- Telegram bot token (from BotFather)
+
+### Install .NET 8 on Ubuntu 24.04
 
 ```bash
 wget https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -56,70 +85,136 @@ sudo apt-get update
 sudo apt-get install -y dotnet-sdk-8.0
 ```
 
-### Verify installation
+Verify:
 
 ```bash
 dotnet --info
-dotnet restore
-dotnet build -c Release
 ```
 
-## Docker build
+---
 
-Repository already uses a multi-stage Dockerfile with `mcr.microsoft.com/dotnet/sdk:8.0` for build and `mcr.microsoft.com/dotnet/aspnet:8.0` for runtime, so host machine does not need SDK when building image in Docker.
+## Required environment variables
+
+Set these before running the app:
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `DATABASE_URL` | Yes | Postgres URL: `postgres://<user>:<password>@<host>:<port>/<db_name>` |
+| `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token |
+| `RAILWAY_PUBLIC_DOMAIN` | Yes | Public domain used to build webhook URL |
+| `TELEGRAM_WEBHOOK_SECRET` | Yes | Secret Telegram sends in `X-Telegram-Bot-Api-Secret-Token` |
+| `VIBE_BOT_API_SECRET` | Yes | Secret for internal API endpoints |
+| `GPT_API_KEY` | No | API key for GPT provider |
+| `GPT_MODEL` | No | GPT model name, default `gpt-4o-mini` |
+
+---
+
+## Local run (step-by-step)
+
+1. Restore dependencies:
+   ```bash
+   dotnet restore
+   ```
+
+2. Build the project:
+   ```bash
+   dotnet build -c Release
+   ```
+
+3. Run the API:
+   ```bash
+   dotnet run
+   ```
+
+4. Open Swagger UI (default):
+   - `http://localhost:5000/swagger` (or the port shown in logs)
+
+---
+
+## Docker build
 
 ```bash
 docker build -t bot-api-template .
 ```
 
-## Environment variables
+---
 
-The application reads the following variables from environment:
+## API endpoints you will actually use
 
-| Variable | Required | Description |
-| --- | --- | --- |
-| `DATABASE_URL` | Yes | PostgreSQL connection URL in the format `postgres://<user>:<password>@<host>:<port>/<db_name>`. Used at startup to build EF Core/Npgsql connection string. If missing or malformed, app throws `InvalidOperationException` and prints explicit validation errors. |
-| `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token. Used to create `ITelegramBotClient` and make Telegram API calls (including webhook registration). If missing, app throws `InvalidOperationException` during startup validation. |
-| `RAILWAY_PUBLIC_DOMAIN` | Yes | Public domain used to compose webhook URL: `https://<RAILWAY_PUBLIC_DOMAIN>/api/telegram/webhook`. |
-| `TELEGRAM_WEBHOOK_SECRET` | Yes | Secret token for Telegram webhook security. Passed when registering webhook and validated for incoming webhook requests via `X-Telegram-Bot-Api-Secret-Token` header. |
-| `VIBE_BOT_API_SECRET` | Yes | API secret for non-webhook controller endpoints. Passed in request body field `vibeBotApiSecret` and validated before endpoint logic is executed. |
-| `GPT_API_KEY` | No | API key for GPT provider. If configured, `GptService` performs a direct GPT API call. |
-| `GPT_MODEL` | No | Model name for GPT provider for direct API calls in `GptService`, default: `gpt-4o-mini`. |
+### 1) Telegram webhook receiver
+- `POST /api/telegram/webhook`
+- Auth: header `X-Telegram-Bot-Api-Secret-Token`
+- Purpose: receive Telegram updates
 
-### Notes
+### 2) Check webhook settings
+- `POST /api/telegram/webhook/settings`
+- Auth: JSON body field `vibeBotApiSecret`
+- Purpose: read current webhook info from Telegram API
 
-- `GptService` is registered in DI (`IGptService`), reads the `Gpt` configuration section (`ApiKey`, `Model`), and contains a direct GPT API call with example system/user prompt templates you can replace with your own prompts.
-- Quartz.NET is connected through DI (`AddQuartz` + hosted service) with default in-memory store and automatic job discovery by attribute: add a class in `Jobs` implementing `IJob` and annotate it with `QuartzSchedule` to register schedule automatically. Includes `DailySixPmUtcLogJob` as an example (18:00 UTC daily).
-- `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, `TELEGRAM_WEBHOOK_SECRET`, and `VIBE_BOT_API_SECRET` are mandatory for normal app operation.
-- Startup validates all required startup variables (`DATABASE_URL`, `TELEGRAM_BOT_TOKEN`, `RAILWAY_PUBLIC_DOMAIN`, `TELEGRAM_WEBHOOK_SECRET`, `VIBE_BOT_API_SECRET`) before service registration and shows a numbered list of missing/invalid values.
+### 3) Send message manually
+- `POST /api/bot/actions/send-message`
+- Auth: JSON body field `vibeBotApiSecret`
+- Purpose: send a message via bot (useful for tests/admin actions)
 
+Example request:
 
-## API endpoints
-
-- `POST /api/telegram/webhook` — receives Telegram webhook updates (protected by Telegram header secret).
-- `POST /api/telegram/webhook/settings` — returns current webhook settings (requires `vibeBotApiSecret` in request body).
-
-## License
-
-This project is distributed under the MIT License. See [LICENSE](./LICENSE).
+```bash
+curl -X POST http://localhost:5000/api/bot/actions/send-message \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "vibeBotApiSecret": "your_secret",
+    "chatId": 123456789,
+    "text": "Hello from VibeBotApi"
+  }'
+```
 
 ---
 
-## Русская версия (кратко)
+## How to extend safely (for inexperienced contributors)
 
-`VibeBotApi` — шаблон backend-приложения на **ASP.NET Core (.NET 8)** для Telegram-бота через webhook.
+### Add a new update behavior
+- Create a new handler in `UpdateChainOfResponsibility/` implementing `IUpdateHandler`.
+- Register it in `UpdateChainOfResponsibilityConfigurator`.
+- Be careful with order: handlers run in registration order.
 
-Что есть в репозитории:
+### Add new database fields
+- Update entity in `Storage/`.
+- Create migration:
+  ```bash
+  dotnet ef migrations add <Name>
+  ```
+- Apply migration:
+  ```bash
+  dotnet ef database update
+  ```
 
-- контроллер webhook Telegram;
-- цепочка обработчиков апдейтов (включая `/start` и логирование);
-- слой хранения с `BotContext` (EF Core + PostgreSQL миграции);
-- сервисный слой с `IGptService`/`GptService` и примером прямого GPT API-вызова;
-- инфраструктура запуска и Docker-конфигурация.
+### Add scheduled background task
+- Add class in `Jobs/` implementing `IJob`.
+- Add `[QuartzSchedule("CRON", TimeZoneId = "UTC")]`.
+- Do not configure Quartz inline in random files.
 
-Для чего использовать:
+### Add GPT-based logic
+- Use `IGptService` and update `GptService` prompt structure.
+- Keep business logic outside transport details when possible.
 
-- быстрый старт MVP Telegram-бота;
-- внутренние боты для команды;
-- учебные/пет-проекты;
-- база для последующей интеграции LLM.
+---
+
+## Common mistakes to avoid
+
+- Missing required env vars (startup will fail by design).
+- Wrong `DATABASE_URL` format.
+- Forgetting to register new handlers in configurator.
+- Changing pipeline order accidentally.
+- Adding Quartz job without `QuartzSchedule` attribute.
+
+---
+
+## Contributor docs
+
+- For agent-focused rules and deeper architecture context, read `AGENTS.md`.
+
+---
+
+## License
+
+MIT. See [LICENSE](./LICENSE).
